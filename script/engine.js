@@ -104,14 +104,7 @@
 				Engine.loadGame();
 			}
 
-			// start loading music and events early
-			for (var key in AudioLibrary) {
-				if (
-					key.toString().indexOf('MUSIC_') > -1 ||
-					key.toString().indexOf('EVENT_') > -1) {
-						AudioEngine.loadAudioFile(AudioLibrary[key]);
-					}
-			}
+			// Audio is loaded on demand when its location or event is reached.
 
 			$('<div>').attr('id', 'locationSlider').appendTo('#main');
 

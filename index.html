@@ -2,6 +2,7 @@
 <html itemscope itemtype="https://schema.org/CreativeWork">
 <head>
 	<meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--  
 		A Dark Room (v1.4)
 		==================
@@ -10,18 +11,13 @@
 		Inspired by Candy Box (http://candies.aniwey.net/)
 		Contribute on GitHub! (https://github.com/doublespeakgames/adarkroom/)
 	-->
-	<title>A Dark Room</title>
+	<title>从暗室到领邦</title>
 	<meta itemprop="description" name="description" property="og:description" content="A minimalist text adventure">
 	<meta itemprop="image" property="og:image" content="img/adr.png" />
 	<meta itemprop="name" property="og:title" content="A Dark Room" />
 	<link rel="shortcut icon" href="favicon.ico" />
 	<link rel="image_src" href="img/adr.png" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-	<script>
-		if(!window.jQuery) {
-			document.write('<script src="lib/jquery.min.js"><\/script>')
-		}
-	</script>
+	<script src="lib/jquery.min.js"></script>
 	<script src="lib/jquery.color-2.1.2.min.js"></script>
 	<script src="lib/jquery.event.move.js"></script>
 	<script src="lib/jquery.event.swipe.js"></script>
@@ -31,21 +27,19 @@
 	<script src="lang/langs.js"></script>
 	
 	<script>
-		// try to read "lang" param's from url
-		var lang = decodeURIComponent((new RegExp('[?|&]lang=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
-		// if no language requested, try to read it from local storage
-		if(!lang){
-			try {
-				lang = localStorage.lang;
-			} catch(e) {}
-		}
-		// if a language different than english requested, load all translations
-		if(lang && lang != 'en'){
-			document.write('<script src="lang/'+lang+'/strings.js"><\/script>');
-			document.write('<link rel="stylesheet" type="text/css" href="lang/'+lang+'/main.css" \/>');
-		}
-	</script>
-	
+    var requestedLang = new URLSearchParams(location.search).get('lang');
+    var storedLang;
+    try { storedLang = localStorage.lang; } catch (e) {}
+    var lang = requestedLang || storedLang || 'zh_cn';
+    if (!Object.prototype.hasOwnProperty.call(langs, lang)) lang = 'zh_cn';
+    document.documentElement.lang = lang === 'zh_cn' ? 'zh-CN' : lang === 'zh_tw' ? 'zh-TW' : lang;
+    if (lang !== 'en') {
+      document.write('<script src="lang/' + lang + '/strings.js"><\/script>');
+      document.write('<link rel="stylesheet" href="lang/' + lang + '/main.css">');
+    }
+  </script>
+
+	<script src="script/zh-patch.js"></script>
 	<script src="script/Button.js"></script>
 	<script src="script/audioLibrary.js"></script>
 	<script src="script/audio.js"></script>
@@ -86,17 +80,15 @@
 	<link rel="stylesheet" type="text/css" href="css/space.css" />
 	
 	<script src="script/localization.js"></script>
-	<!-- Google Analytics -->
-	<script>
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  <script src="script/realm-core.js"></script>
+  <script src="script/save-format.js"></script>
+  <script src="script/game-ui.js"></script>
+  <script src="script/auth-key.js"></script>
+  <script src="script/cloud.js"></script>
+  <script src="script/realm.js"></script>
+  <script src="script/expedition.js"></script>
+  <link rel="stylesheet" href="css/realm.css">
 
-		ga('create', 'UA-41314886-1', 'doublespeakgames.com');
-		ga('send', 'pageview');
-	</script>
-	
 </head>
 <body>
 	<div id="wrapper">

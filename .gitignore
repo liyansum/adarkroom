@@ -6,3 +6,12 @@
 lang/.DS_Store
 .DS_Store
 node_modules
+
+node_modules/
+dist/
+.wrangler/
+.dev.vars
+.env
+.env.*
+playwright-report/
+test-results/
